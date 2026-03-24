@@ -72,20 +72,21 @@
         };
         grammars = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
         grammar-srcs = {
-          inherit
-            tree-sitter-markdown
-            tree-sitter-nix
-            tree-sitter-nushell
-            tree-sitter-python
-            tree-sitter-rust
-            ;
-          tree-sitter-vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
+          nix = tree-sitter-nix;
+          nushell = tree-sitter-nushell;
+          python = tree-sitter-python;
+          rust = tree-sitter-rust;
+          markdown = tree-sitter-markdown;
+          ivy = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
+          vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };
         tree-sitter-build =
           name: src:
           pkgs.stdenv.mkDerivation {
-            inherit name src;
+            name = "tree-sitter-${name}";
+            inherit src;
             nativeBuildInputs = [
+              pkgs.jq
               pkgs.tree-sitter
               pkgs.nodejs_24
             ];
@@ -93,11 +94,21 @@
               echo 'skipping configure'
             '';
             buildPhase = ''
-              tree-sitter generate
+              for grammar_path in $(jq '.grammars[].path // "."' tree-sitter.json -r); do
+                tree-sitter generate "$grammar_path/grammar.js"
+              done
             '';
             installPhase = ''
               mkdir $out
-              cp -r tree-sitter.json src/ $out
+              cp tree-sitter.json $out
+
+              for grammar_path in $(jq '.grammars[].path // "."' tree-sitter.json -r); do
+                echo checking $grammar_path
+
+                ls "$grammar_path"
+                mkdir -p "$out/$grammar_path"
+                cp -r "$grammar_path/src" "$out/$grammar_path"
+              done
             '';
           };
       in
