@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    tree-sitter-markdown = {
+      url = "github:tree-sitter-grammars/tree-sitter-markdown";
+      flake = false;
+    };
     tree-sitter-nix = {
       url = "github:nix-community/tree-sitter-nix";
       flake = false;
@@ -43,6 +47,7 @@
       crane,
       treefmt-nix,
 
+      tree-sitter-markdown,
       tree-sitter-nix,
       tree-sitter-nushell,
       tree-sitter-python,
@@ -68,10 +73,11 @@
         grammars = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
         grammar-srcs = {
           inherit
-            tree-sitter-nushell
-            tree-sitter-rust
+            tree-sitter-markdown
             tree-sitter-nix
+            tree-sitter-nushell
             tree-sitter-python
+            tree-sitter-rust
             ;
           tree-sitter-vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };

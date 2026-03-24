@@ -55,6 +55,7 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "tree-sitter-markdown": "tree-sitter-markdown",
         "tree-sitter-nix": "tree-sitter-nix",
         "tree-sitter-nushell": "tree-sitter-nushell",
         "tree-sitter-python": "tree-sitter-python",
@@ -95,6 +96,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-markdown": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1772129059,
+        "narHash": "sha256-WUVN7+lzDI+VC5PuJjhHiS4JpVr1x0Ic30i2tVrI6W8=",
+        "owner": "tree-sitter-grammars",
+        "repo": "tree-sitter-markdown",
+        "rev": "f969cd3ae3f9fbd4e43205431d0ae286014c05b5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter-grammars",
+        "repo": "tree-sitter-markdown",
         "type": "github"
       }
     },
