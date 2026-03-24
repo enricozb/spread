@@ -77,6 +77,7 @@ impl<'a> From<&'a Node<'_>> for Selection {
 #[derive(Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
 pub struct Point {
   pub line: usize,
+  /// If `column == i32::MIN`, this is the point at the end of the line.
   pub column: usize,
 }
 
@@ -84,9 +85,18 @@ impl Point {
   const SEPARATOR: char = '.';
 
   fn prev(self) -> Self {
-    Self {
-      line: self.line,
-      column: self.column - 1,
+    if self.column == 1 {
+      Self {
+        line: self.line - 1,
+        // a hack specific to kakoune, as it uses i32 to store columns, and
+        // i32::MIN is the end of the line.
+        column: (i32::MIN as usize),
+      }
+    } else {
+      Self {
+        line: self.line,
+        column: self.column - 1,
+      }
     }
   }
 }
