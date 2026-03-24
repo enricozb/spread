@@ -55,6 +55,11 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "tree-sitter-nix": "tree-sitter-nix",
+        "tree-sitter-nushell": "tree-sitter-nushell",
+        "tree-sitter-python": "tree-sitter-python",
+        "tree-sitter-rust": "tree-sitter-rust",
+        "tree-sitter-vine": "tree-sitter-vine",
         "treefmt-nix": "treefmt-nix"
       }
     },
@@ -90,6 +95,86 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-nix": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764782150,
+        "narHash": "sha256-cSiBd0XkSR8l1CF2vkThWUtMxqATwuxCNO5oy2kyOZY=",
+        "owner": "nix-community",
+        "repo": "tree-sitter-nix",
+        "rev": "eabf96807ea4ab6d6c7f09b671a88cd483542840",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "tree-sitter-nix",
+        "type": "github"
+      }
+    },
+    "tree-sitter-nushell": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774015059,
+        "narHash": "sha256-G+XuQSqvJ9xRNq4fYiyHK9+AmCNofayPOC6JrFXpcjU=",
+        "owner": "nushell",
+        "repo": "tree-sitter-nu",
+        "rev": "696d257f6b652edb50878a783b30ad7833dec49e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nushell",
+        "repo": "tree-sitter-nu",
+        "type": "github"
+      }
+    },
+    "tree-sitter-python": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757972015,
+        "narHash": "sha256-gHeja/X/Ux8fa5rh0b69/bcUcmHBcXsK5uJ1ibtuI20=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-python",
+        "rev": "26855eabccb19c6abf499fbc5b8dc7cc9ab8bc64",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-python",
+        "type": "github"
+      }
+    },
+    "tree-sitter-rust": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773939026,
+        "narHash": "sha256-nx7FiGQ2ybaq6YSuToQSQbH6Vj+JNWSXacuPumHGV/Q=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-rust",
+        "rev": "8a1ccae7aaccdc11b04dbd803453e3e9cfd9159b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-rust",
+        "type": "github"
+      }
+    },
+    "tree-sitter-vine": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1773336244,
+        "narHash": "sha256-rtM0DmIF1L9KRg/PpFsQkkMFmlFVg6PAVeRyMblk2zw=",
+        "owner": "VineLang",
+        "repo": "vine",
+        "rev": "41e5ec678d02e25319c4ef43bf3581bf3f013c84",
+        "type": "github"
+      },
+      "original": {
+        "owner": "VineLang",
+        "repo": "vine",
         "type": "github"
       }
     },
