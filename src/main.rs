@@ -30,7 +30,7 @@ fn main() {
       .descendant_for_point_range(selection.start.into(), selection.end.into())
       .unwrap();
     let mut new_selection = Selection::from(&node);
-    while selection == new_selection {
+    while selection.contains(new_selection) {
       let Some(parent) = node.parent() else { break };
       new_selection = Selection::from(&parent);
       node = parent;

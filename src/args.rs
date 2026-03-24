@@ -41,6 +41,10 @@ impl Selection {
       end: self.start,
     }
   }
+
+  pub fn contains(self, other: Self) -> bool {
+    self.start <= other.start && other.end <= self.end
+  }
 }
 
 impl Display for Selection {
