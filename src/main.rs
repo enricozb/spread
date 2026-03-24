@@ -26,12 +26,14 @@ fn main() {
     let inverted = selection.is_inverted();
     let selection = selection.normalized();
 
-    let node = root
+    let mut node = root
       .descendant_for_point_range(selection.start.into(), selection.end.into())
       .unwrap();
     let mut new_selection = Selection::from(&node);
-    if selection == new_selection {
-      new_selection = Selection::from(&node.parent().unwrap());
+    while selection == new_selection {
+      let Some(parent) = node.parent() else { break };
+      new_selection = Selection::from(&parent);
+      node = parent;
     }
     if inverted {
       new_selection = new_selection.inverted();
