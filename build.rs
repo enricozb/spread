@@ -7,7 +7,7 @@ struct TreeSitterConfig {
   grammars: Vec<Grammar>,
 }
 
-#[derive(Deserialize)]
+#[derive(Clone, Deserialize)]
 struct Grammar {
   name: String,
   camelcase: String,
@@ -21,16 +21,17 @@ fn main() {
   let out_dir = PathBuf::from(env::var("OUT_DIR").unwrap());
   let mut mods = Vec::new();
 
-  let mut languages = Vec::new();
-  let grammars = env::var("GRAMMARS").unwrap();
-  for grammar_path in grammars.split(":").map(PathBuf::from) {
+  let mut grammars = Vec::new();
+  let grammar_paths = env::var("GRAMMARS").unwrap();
+  for grammar_path in grammar_paths.split(":").map(PathBuf::from) {
     let tree_sitter_json_path = grammar_path.join("tree-sitter.json");
     let tree_sitter_json = std::fs::read_to_string(tree_sitter_json_path).unwrap();
 
     let tree_sitter_config: TreeSitterConfig = serde_json::from_str(&tree_sitter_json).unwrap();
-    let [Grammar { name, camelcase, .. }] = tree_sitter_config.grammars.as_slice() else {
+    let [grammar] = tree_sitter_config.grammars.as_slice() else {
       panic!("only single-grammar files supported");
     };
+    let Grammar { name, .. } = &grammar;
 
     let mut build = cc::Build::new();
     let src_path = grammar_path.join("src");
@@ -47,7 +48,6 @@ fn main() {
     }
     build.compile(&format!("tree-sitter-{name}"));
 
-    languages.push(camelcase.clone());
     mods.push(format!(
       r#"
 pub mod {name} {{
@@ -57,19 +57,38 @@ pub mod {name} {{
 }}
       "#,
     ));
+    grammars.push(grammar.clone());
   }
 
   let mods = mods.join("\n");
-  let languages = languages.join(",");
+  let languages = grammars
+    .iter()
+    .map(|g| g.camelcase.as_str())
+    .collect::<Vec<_>>()
+    .join(",\n");
+  let matches = grammars
+    .iter()
+    .map(|g| format!("Language::{} => {}::language()", g.camelcase, g.name))
+    .collect::<Vec<_>>()
+    .join(",\n");
   let grammars_mod = format!(
-    "pub mod grammars {{
-    #[derive(Clone, Debug, clap::ValueEnum)]
-    pub enum Language {{
-      {languages}
-    }}
+    "
+pub mod grammars {{
+  #[derive(Clone, Copy, Debug, clap::ValueEnum)]
+  pub enum Language {{
+    {languages}
+  }}
 
-    {mods}
-  }}"
+  impl Language {{
+    pub fn as_tree_sitter_language(self) -> tree_sitter::Language {{
+      match self {{
+        {matches}
+      }}
+    }}
+  }}
+
+  {mods}
+}}"
   );
 
   std::fs::write(out_dir.join("grammars.rs"), grammars_mod).unwrap();

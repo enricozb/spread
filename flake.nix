@@ -65,6 +65,7 @@
           programs.nixfmt.enable = true;
           programs.rustfmt.enable = true;
         };
+        grammars = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
         grammar-srcs = {
           inherit
             tree-sitter-nushell
@@ -95,8 +96,13 @@
           };
       in
       {
+        packages.default = craneLib.buildPackage {
+          src = craneLib.cleanCargoSource ./.;
+          env.GRAMMARS = grammars;
+        };
+
         devShells.default = craneLib.devShell {
-          GRAMMARS = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
+          GRAMMARS = grammars;
           packages = [ pkgs.tree-sitter ];
         };
 
