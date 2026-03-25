@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    tree-sitter-kak = {
+      url = "github:saifulapm/tree-sitter-kakscript";
+      flake = false;
+    };
     tree-sitter-markdown = {
       url = "github:tree-sitter-grammars/tree-sitter-markdown";
       flake = false;
@@ -47,6 +51,7 @@
       crane,
       treefmt-nix,
 
+      tree-sitter-kak,
       tree-sitter-markdown,
       tree-sitter-nix,
       tree-sitter-nushell,
@@ -72,11 +77,12 @@
         };
         grammars = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
         grammar-srcs = {
+          kak = tree-sitter-kak;
+          markdown = tree-sitter-markdown;
           nix = tree-sitter-nix;
           nushell = tree-sitter-nushell;
           python = tree-sitter-python;
           rust = tree-sitter-rust;
-          markdown = tree-sitter-markdown;
           ivy = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
           vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };

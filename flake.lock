@@ -55,6 +55,7 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "tree-sitter-kak": "tree-sitter-kak",
         "tree-sitter-markdown": "tree-sitter-markdown",
         "tree-sitter-nix": "tree-sitter-nix",
         "tree-sitter-nushell": "tree-sitter-nushell",
@@ -96,6 +97,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-kak": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1774441459,
+        "narHash": "sha256-tiyDats3OCqeA4Pz29vUHNNdkC5aGtFc20APafyo25c=",
+        "owner": "saifulapm",
+        "repo": "tree-sitter-kakscript",
+        "rev": "2a65a7f64cfa0dc37d241fd3bff63bfcfca945ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "saifulapm",
+        "repo": "tree-sitter-kakscript",
         "type": "github"
       }
     },
