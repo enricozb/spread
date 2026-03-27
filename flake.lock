@@ -173,11 +173,11 @@
     "tree-sitter-kak": {
       "flake": false,
       "locked": {
-        "lastModified": 1774441459,
-        "narHash": "sha256-tiyDats3OCqeA4Pz29vUHNNdkC5aGtFc20APafyo25c=",
+        "lastModified": 1774488124,
+        "narHash": "sha256-yToHkCviBARBaJrvl/aozU1Kn6I9uVsBFYqrn+11Ink=",
         "owner": "saifulapm",
         "repo": "tree-sitter-kakscript",
-        "rev": "2a65a7f64cfa0dc37d241fd3bff63bfcfca945ca",
+        "rev": "0ea9aee7972752f86ac6d16e180ada77074ea83f",
         "type": "github"
       },
       "original": {
