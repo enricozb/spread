@@ -3,7 +3,7 @@ use std::{fmt::Display, str::FromStr};
 use clap::Parser;
 use tree_sitter::Node;
 
-use crate::grammars::Language;
+use crate::Language;
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]

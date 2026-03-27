@@ -13,6 +13,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    trix = {
+      url = "github:enricozb/trix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     tree-sitter-kak = {
       url = "github:saifulapm/tree-sitter-kakscript";
       flake = false;
@@ -51,6 +55,7 @@
       crane,
       treefmt-nix,
 
+      trix,
       tree-sitter-kak,
       tree-sitter-markdown,
       tree-sitter-nix,
@@ -75,7 +80,6 @@
           programs.nixfmt.enable = true;
           programs.rustfmt.enable = true;
         };
-        grammars = builtins.concatStringsSep ":" (pkgs.lib.mapAttrsToList tree-sitter-build grammar-srcs);
         grammar-srcs = {
           kak = tree-sitter-kak;
           markdown = tree-sitter-markdown;
@@ -86,37 +90,7 @@
           ivy = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
           vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };
-        tree-sitter-build =
-          name: src:
-          pkgs.stdenv.mkDerivation {
-            name = "tree-sitter-${name}";
-            inherit src;
-            nativeBuildInputs = [
-              pkgs.jq
-              pkgs.tree-sitter
-              pkgs.nodejs_24
-            ];
-            configurePhase = ''
-              echo 'skipping configure'
-            '';
-            buildPhase = ''
-              for grammar_path in $(jq '.grammars[].path // "."' tree-sitter.json -r); do
-                tree-sitter generate "$grammar_path/grammar.js"
-              done
-            '';
-            installPhase = ''
-              mkdir $out
-              cp tree-sitter.json $out
-
-              for grammar_path in $(jq '.grammars[].path // "."' tree-sitter.json -r); do
-                echo checking $grammar_path
-
-                ls "$grammar_path"
-                mkdir -p "$out/$grammar_path"
-                cp -r "$grammar_path/src" "$out/$grammar_path"
-              done
-            '';
-          };
+        grammars = trix.mkGrammarDrvs.${system} grammar-srcs;
       in
       {
         packages.default = craneLib.buildPackage {

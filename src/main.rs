@@ -1,12 +1,19 @@
 use std::io::Read;
 
-use clap::Parser as _;
+use clap::{Parser as _, ValueEnum};
 use tree_sitter::Parser;
 
 use crate::args::{Args, Selection};
 
-mod args;
 include!(concat!(env!("OUT_DIR"), "/", "grammars.rs"));
+
+mod args;
+
+languages! {
+  #[allow(non_camel_case_types)]
+  #[derive(Clone, Copy, Debug, ValueEnum)]
+  pub enum Language
+}
 
 fn main() {
   let args = Args::parse();
