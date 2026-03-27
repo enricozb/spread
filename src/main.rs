@@ -1,4 +1,4 @@
-use std::io::Read;
+use std::{io::Read, sync::OnceLock};
 
 use clap::{Parser as _, ValueEnum};
 use tree_sitter::Parser;
@@ -15,11 +15,16 @@ languages! {
   pub enum Language
 }
 
+pub static INPUT_LINE_LENGTHS: OnceLock<Vec<usize>> = OnceLock::new();
+
 fn main() {
   let args = Args::parse();
 
   let mut text = Vec::new();
   std::io::stdin().read_to_end(&mut text).unwrap();
+
+  let line_lengths = text.split(|&b| b == b'\n').map(|l| l.len()).collect();
+  INPUT_LINE_LENGTHS.set(line_lengths).unwrap();
 
   let mut parser = Parser::new();
   parser.set_language(&args.language.as_tree_sitter_language()).unwrap();

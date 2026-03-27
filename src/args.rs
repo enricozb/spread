@@ -3,7 +3,7 @@ use std::{fmt::Display, str::FromStr};
 use clap::Parser;
 use tree_sitter::Node;
 
-use crate::Language;
+use crate::{INPUT_LINE_LENGTHS, Language};
 
 #[derive(Debug, Parser)]
 #[command(author, version, about, long_about = None)]
@@ -92,9 +92,10 @@ impl Point {
     if self.column == 1 {
       Self {
         line: self.line - 1,
-        // a hack specific to kakoune, as it uses i32 to store columns, and
-        // i32::MIN is the end of the line.
-        column: (i32::MIN as usize),
+        column: INPUT_LINE_LENGTHS
+          .get()
+          .and_then(|v| Some(v.get(self.line - 2)? + 1))
+          .unwrap_or(i32::MIN as usize),
       }
     } else {
       Self {
