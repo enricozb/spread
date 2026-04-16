@@ -45,6 +45,14 @@
       url = "github:VineLang/vine";
       flake = false;
     };
+    tree-sitter-javascript = {
+      url = "github:tree-sitter/tree-sitter-javascript";
+      flake = false;
+    };
+    tree-sitter-typescript = {
+      url = "github:tree-sitter/tree-sitter-typescript";
+      flake = false;
+    };
   };
 
   outputs =
@@ -59,6 +67,8 @@
       tree-sitter-kak,
       tree-sitter-markdown,
       tree-sitter-nix,
+      tree-sitter-javascript,
+      tree-sitter-typescript,
       tree-sitter-nushell,
       tree-sitter-python,
       tree-sitter-rust,
@@ -80,26 +90,35 @@
           programs.nixfmt.enable = true;
           programs.rustfmt.enable = true;
         };
-        grammar-srcs = {
-          kak = tree-sitter-kak;
-          markdown = tree-sitter-markdown;
-          nix = tree-sitter-nix;
-          nushell = tree-sitter-nushell;
-          python = tree-sitter-python;
-          rust = tree-sitter-rust;
-          ivy = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
-          vine = "${tree-sitter-vine}/lsp/tree-sitter-vine";
+        grammars = {
+          kak.src = tree-sitter-kak;
+          markdown.src = tree-sitter-markdown;
+          nix.src = tree-sitter-nix;
+          nushell.src = tree-sitter-nushell;
+          python.src = tree-sitter-python;
+          rust.src = tree-sitter-rust;
+          ivy.src = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
+          vine.src = "${tree-sitter-vine}/lsp/tree-sitter-vine";
+          javascript.src = tree-sitter-javascript;
+          typescript = {
+            src = tree-sitter-typescript;
+            filter = [
+              "typescript"
+              "tsx"
+            ];
+          };
         };
-        grammars = trix.mkGrammarDrvs.${system} grammar-srcs;
+        trixLib = trix.mkLib pkgs grammars;
+        trixConfig = builtins.toJSON trixLib.config;
       in
       {
         packages.default = craneLib.buildPackage {
           src = craneLib.cleanCargoSource ./.;
-          env.GRAMMARS = grammars;
+          env.TRIX_CONFIG_JSON = trixConfig;
         };
 
         devShells.default = craneLib.devShell {
-          GRAMMARS = grammars;
+          TRIX_CONFIG_JSON = trixConfig;
           packages = [ pkgs.tree-sitter ];
         };
 

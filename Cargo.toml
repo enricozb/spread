@@ -8,4 +8,4 @@ clap = { version = "4.6.0", features = ["derive"] }
 tree-sitter = "0.26.7"
 
 [build-dependencies]
-trix-build = "0.2"
+trix-build = "0.6"
