@@ -12,6 +12,7 @@ mod args;
 languages! {
   #[allow(non_camel_case_types)]
   #[derive(Clone, Copy, Debug, ValueEnum)]
+  #[value(rename_all = "lower")]
   pub enum Language
 }
 
