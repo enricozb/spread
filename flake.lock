@@ -55,6 +55,7 @@
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs",
         "rust-overlay": "rust-overlay",
+        "tree-sitter-html": "tree-sitter-html",
         "tree-sitter-javascript": "tree-sitter-javascript",
         "tree-sitter-kak": "tree-sitter-kak",
         "tree-sitter-markdown": "tree-sitter-markdown",
@@ -100,6 +101,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tree-sitter-html": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1757967889,
+        "narHash": "sha256-WT8ZHU4wDNovIAWbHNSvjx6zmaTn8XH3IobsckIVXxg=",
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-html",
+        "rev": "73a3947324f6efddf9e17c0ea58d454843590cc0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tree-sitter",
+        "repo": "tree-sitter-html",
         "type": "github"
       }
     },
