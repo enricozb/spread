@@ -45,6 +45,10 @@
       url = "github:VineLang/vine";
       flake = false;
     };
+    tree-sitter-css = {
+      url = "github:tree-sitter/tree-sitter-css";
+      flake = false;
+    };
     tree-sitter-html = {
       url = "github:tree-sitter/tree-sitter-html";
       flake = false;
@@ -68,6 +72,7 @@
       treefmt-nix,
 
       trix,
+      tree-sitter-css,
       tree-sitter-html,
       tree-sitter-kak,
       tree-sitter-markdown,
@@ -104,6 +109,7 @@
           rust.src = tree-sitter-rust;
           ivy.src = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
           vine.src = "${tree-sitter-vine}/lsp/tree-sitter-vine";
+          css.src = tree-sitter-css;
           html.src = tree-sitter-html;
           javascript.src = tree-sitter-javascript;
           typescript = {
