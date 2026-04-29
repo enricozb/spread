@@ -13,10 +13,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    trix = {
-      url = "github:enricozb/trix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    trix.url = "github:enricozb/trix";
     tree-sitter-kak = {
       url = "github:saifulapm/tree-sitter-kakscript";
       flake = false;
