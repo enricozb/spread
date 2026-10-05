@@ -58,6 +58,10 @@
       url = "github:tree-sitter/tree-sitter-typescript";
       flake = false;
     };
+    tree-sitter-typst = {
+      url = "github:SeniorMars/tree-sitter-typst";
+      flake = false;
+    };
     tree-sitter-vine = {
       url = "github:VineLang/vine";
       flake = false;
@@ -84,6 +88,7 @@
       tree-sitter-python,
       tree-sitter-rust,
       tree-sitter-typescript,
+      tree-sitter-typst,
       tree-sitter-vine,
       ...
     }:
@@ -121,6 +126,7 @@
               "tsx"
             ];
           };
+          typst.src = tree-sitter-typst;
           vine.src = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };
         trixLib = trix.mkLib pkgs grammars;
