@@ -14,6 +14,22 @@
     };
 
     trix.url = "github:enricozb/trix";
+    tree-sitter-cpp = {
+      url = "github:tree-sitter/tree-sitter-cpp";
+      flake = false;
+    };
+    tree-sitter-css = {
+      url = "github:tree-sitter/tree-sitter-css";
+      flake = false;
+    };
+    tree-sitter-html = {
+      url = "github:tree-sitter/tree-sitter-html";
+      flake = false;
+    };
+    tree-sitter-javascript = {
+      url = "github:tree-sitter/tree-sitter-javascript";
+      flake = false;
+    };
     tree-sitter-kak = {
       url = "github:saifulapm/tree-sitter-kakscript";
       flake = false;
@@ -38,24 +54,12 @@
       url = "github:tree-sitter/tree-sitter-rust";
       flake = false;
     };
-    tree-sitter-vine = {
-      url = "github:VineLang/vine";
-      flake = false;
-    };
-    tree-sitter-css = {
-      url = "github:tree-sitter/tree-sitter-css";
-      flake = false;
-    };
-    tree-sitter-html = {
-      url = "github:tree-sitter/tree-sitter-html";
-      flake = false;
-    };
-    tree-sitter-javascript = {
-      url = "github:tree-sitter/tree-sitter-javascript";
-      flake = false;
-    };
     tree-sitter-typescript = {
       url = "github:tree-sitter/tree-sitter-typescript";
+      flake = false;
+    };
+    tree-sitter-vine = {
+      url = "github:VineLang/vine";
       flake = false;
     };
   };
@@ -69,16 +73,17 @@
       treefmt-nix,
 
       trix,
+      tree-sitter-cpp,
       tree-sitter-css,
       tree-sitter-html,
+      tree-sitter-javascript,
       tree-sitter-kak,
       tree-sitter-markdown,
       tree-sitter-nix,
-      tree-sitter-javascript,
-      tree-sitter-typescript,
       tree-sitter-nushell,
       tree-sitter-python,
       tree-sitter-rust,
+      tree-sitter-typescript,
       tree-sitter-vine,
       ...
     }:
@@ -98,17 +103,17 @@
           programs.rustfmt.enable = true;
         };
         grammars = {
+          cpp.src = tree-sitter-cpp;
+          css.src = tree-sitter-css;
+          html.src = tree-sitter-html;
+          ivy.src = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
+          javascript.src = tree-sitter-javascript;
           kak.src = tree-sitter-kak;
           markdown.src = tree-sitter-markdown;
           nix.src = tree-sitter-nix;
           nushell.src = tree-sitter-nushell;
           python.src = tree-sitter-python;
           rust.src = tree-sitter-rust;
-          ivy.src = "${tree-sitter-vine}/lsp/tree-sitter-ivy";
-          vine.src = "${tree-sitter-vine}/lsp/tree-sitter-vine";
-          css.src = tree-sitter-css;
-          html.src = tree-sitter-html;
-          javascript.src = tree-sitter-javascript;
           typescript = {
             src = tree-sitter-typescript;
             filter = [
@@ -116,6 +121,7 @@
               "tsx"
             ];
           };
+          vine.src = "${tree-sitter-vine}/lsp/tree-sitter-vine";
         };
         trixLib = trix.mkLib pkgs grammars;
         trixConfig = builtins.toJSON trixLib.config;
